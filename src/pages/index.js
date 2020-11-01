@@ -18,7 +18,7 @@ export const query = graphql`
         excerpt(pruneLength: 250)
         frontmatter {
           title
-          date
+          date(formatString: "YYYY MMMM Do")
         }
         fields {
           slug
@@ -38,7 +38,7 @@ const HomePage = ({ data }) => {
 
       <div>
         {data.allMdx.nodes.map(({ excerpt, frontmatter, fields }) => (
-          <div>
+          <div key={fields.id}>
             <Link to={fields.slug}>
               <h1>{frontmatter.title}</h1>
             </Link>

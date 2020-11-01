@@ -28,6 +28,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             fields {
               slug
             }
+            frontmatter {
+              title
+            }
           }
         }
       }
@@ -45,7 +48,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     createPage({
       path: node.fields.slug,
       component: path.resolve(`./src/components/post-page-template.js`),
-      context: { id: node.id },
+      context: {
+        id: node.id,
+        prev: index === 0 ? null : posts[index - 1].node,
+        next: index === posts.length - 1 ? null : posts[index + 1].node,
+      },
     })
   })
 }
